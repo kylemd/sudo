@@ -27,7 +27,8 @@ jobs:
 
       # 4. Publish the built executable as an artifact
       - name: Upload sudo.exe
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: sudo-windows-exe
           path: target/release/sudo.exe
+          # optional: retention-days: 7
