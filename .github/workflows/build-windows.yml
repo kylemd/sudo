@@ -1,0 +1,33 @@
+name: Build sudo (Windows)
+
+# Trigger on manual dispatch or whenever you push to main
+on:
+  push:
+    branches: [ main ]
+  workflow_dispatch:
+
+jobs:
+  build-windows:
+    runs-on: windows-latest
+
+    steps:
+      # 1. Check out your fork’s code
+      - uses: actions/checkout@v3
+
+      # 2. Install Rust toolchain
+      - name: Setup Rust
+        uses: actions-rs/toolchain@v1
+        with:
+          toolchain: stable
+          override: true
+
+      # 3. Build in release mode
+      - name: cargo build
+        run: cargo build --release
+
+      # 4. Publish the built executable as an artifact
+      - name: Upload sudo.exe
+        uses: actions/upload-artifact@v3
+        with:
+          name: sudo-windows-exe
+          path: target/release/sudo.exe
